@@ -49,8 +49,6 @@ public class DocumentImpl implements Document{
         this.wordmap = temp;
 	}
 
-
-
 	/**
      * @return content of text document
      */

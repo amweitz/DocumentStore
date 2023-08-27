@@ -1,6 +1,11 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-.DS_Store
-target
+#Ignore IntelliJ Files
+.idea
 
+#Ignore MacOS Files
+.DS_store
+
+*.class
+*.iml
+
+#Ignore Maven target directories
+target/

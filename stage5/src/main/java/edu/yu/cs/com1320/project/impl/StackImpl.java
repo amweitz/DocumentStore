@@ -1,13 +1,11 @@
 package edu.yu.cs.com1320.project.impl;
 import edu.yu.cs.com1320.project.Stack;
 
-
-
-public class StackImpl<T> implements Stack<T>{
+public class StackImpl < T > implements Stack < T > {
     T[] array;
     int count;
 
-    public StackImpl(){
+    public StackImpl() {
         this.array = (T[]) new Object[1];
         this.count = 0;
     }
@@ -16,13 +14,12 @@ public class StackImpl<T> implements Stack<T>{
      */
     @Override
     public void push(T element) {
-        if (this.count == 0){
+        if (this.count == 0) {
             this.array[0] = element;
             count++;
-        }
-        else{
+        } else {
             T[] temp = (T[]) new Object[this.count + 1];
-            for (int x = 0; x < this.count; x++){
+            for (int x = 0; x < this.count; x++) {
                 temp[x] = this.array[x];
             }
             this.array = temp;
@@ -37,19 +34,18 @@ public class StackImpl<T> implements Stack<T>{
      */
     @Override
     public T pop() {
-        if (this.count == 0){
+        if (this.count == 0) {
             return null;
         }
-        if (this.count == 1){
-          T hold = this.array[0];
-          this.array[0] = null;
-          this.count--;
-          return hold;
-        }
-        else{
+        if (this.count == 1) {
+            T hold = this.array[0];
+            this.array[0] = null;
+            this.count--;
+            return hold;
+        } else {
             T ex = this.array[this.count - 1];
             T[] temp = (T[]) new Object[this.count - 1];
-            for (int x = 0; x < this.count - 1; x++){
+            for (int x = 0; x < this.count - 1; x++) {
                 temp[x] = this.array[x];
             }
             this.array = temp;
@@ -63,7 +59,7 @@ public class StackImpl<T> implements Stack<T>{
      */
     @Override
     public T peek() {
-        if (this.count == 0){
+        if (this.count == 0) {
             return null;
         }
         return this.array[this.count - 1];

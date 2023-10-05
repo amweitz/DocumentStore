@@ -19,23 +19,23 @@ class DocumentPersistenceManagerTest {
         x.setLastUseTime(System.nanoTime());
         dpm.serialize(this.uri, x);
         Document temp = dpm.deserialize(this.uri);
-        assertEquals(null,temp.getDocumentBinaryData());
-        assertEquals(0,temp.getLastUseTime());
+        assertEquals(null, temp.getDocumentBinaryData());
+        assertEquals(0, temp.getLastUseTime());
     }
     @Test
     void testSerielizeByte() throws IOException {
         DocumentPersistenceManager dpm = new DocumentPersistenceManager(null);
         byte[] x = new byte[2];
-        x[0] = (byte)3;
-        x[1] = (byte)7;
-        DocumentImpl test = new DocumentImpl(this.uri,x);
+        x[0] = (byte) 3;
+        x[1] = (byte) 7;
+        DocumentImpl test = new DocumentImpl(this.uri, x);
         byte[] bytes = test.getDocumentBinaryData();
         test.setLastUseTime(System.nanoTime());
-        dpm.serialize(this.uri,test);
+        dpm.serialize(this.uri, test);
         Document temp = dpm.deserialize(this.uri);
         assertEquals(Arrays.toString(bytes), Arrays.toString(temp.getDocumentBinaryData()));
-        assertEquals(null,temp.getDocumentTxt());
-        assertEquals(0,temp.getLastUseTime());
+        assertEquals(null, temp.getDocumentTxt());
+        assertEquals(0, temp.getLastUseTime());
     }
     @Test
     void testDesktopSerielizetxt() throws IOException {

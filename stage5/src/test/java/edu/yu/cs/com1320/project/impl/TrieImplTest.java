@@ -8,14 +8,14 @@ import java.util.Set;
 class TrieImplTest {
     @Test
     void TestTrie() {
-        TrieImpl<Integer> x = new TrieImpl<>();
+        TrieImpl < Integer > x = new TrieImpl < > ();
         x.put("Avi", 1);
         x.put("Avi", 9);
         x.put("da", 5);
     }
     @Test
     void TestTriedelete() {
-        TrieImpl<Integer> x = new TrieImpl<>();
+        TrieImpl < Integer > x = new TrieImpl < > ();
         x.put("A", 3);
         x.put("Avi", 1);
         x.put("Avi", 9);
@@ -28,48 +28,48 @@ class TrieImplTest {
 
     @Test
     void TestTriedeleteAll() {
-        TrieImpl<Integer> x = new TrieImpl<>();
+        TrieImpl < Integer > x = new TrieImpl < > ();
         x.put("Avi", 1);
         x.put("Avi", 9);
-        x.put("Avit",9);
+        x.put("Avit", 9);
         x.put("da", 5);
         x.deleteAll("Avi");
-        Set<Integer> y = x.deleteAll("Avit");
+        Set < Integer > y = x.deleteAll("Avit");
         System.out.println(y);
-        Set<Integer> z = x.deleteAll("Avit");
+        Set < Integer > z = x.deleteAll("Avit");
         System.out.println(z);
     }
     @Test
     void TestTriedeleteAllpr() {
-        TrieImpl<Integer> x = new TrieImpl<>();
+        TrieImpl < Integer > x = new TrieImpl < > ();
         x.put("A", 3);
         x.put("Avi", 1);
         x.put("Avi", 9);
         x.put("da", 5);
-        Set<Integer> y = x.deleteAllWithPrefix("A");
+        Set < Integer > y = x.deleteAllWithPrefix("A");
         System.out.println(y);
-        Set<Integer> z = x.deleteAllWithPrefix("A");
+        Set < Integer > z = x.deleteAllWithPrefix("A");
         System.out.println(z);
 
     }
 
     @Test
     void TestTriedeleteAll2() {
-        TrieImpl<Integer> x = new TrieImpl<>();
+        TrieImpl < Integer > x = new TrieImpl < > ();
         x.put("Avi", 1);
         x.put("Avi", 9);
         x.put("da", 5);
-        Set<Integer> y = x.deleteAll("Avi");
+        Set < Integer > y = x.deleteAll("Avi");
         System.out.println(y);
-        Set<Integer> z = x.deleteAll("Avi");
+        Set < Integer > z = x.deleteAll("Avi");
         System.out.println(z);
     }
     @Test
     void TestTriegetallprefixsort() {
-        class Strings{
+        class Strings {
             private String x;
             private int z;
-            public Strings(String t, int y){
+            public Strings(String t, int y) {
                 this.x = t;
                 this.z = y;
             }
@@ -78,36 +78,36 @@ class TrieImplTest {
                 return this.x;
             }
 
-            public int getint(){
+            public int getint() {
                 return this.z;
             }
             @Override
-            public String toString(){
+            public String toString() {
                 return this.x + " " + this.z;
             }
         }
-        TrieImpl<Strings> x = new TrieImpl<>();
-        Strings one = new Strings("one",1);
-        Strings two = new Strings("two",2);
-        Strings three = new Strings("three",3);
-        x.put("avi",one);
-        x.put("avit",two);
-        x.put("avitz",three);
-        Comparator<Strings> comparator = new Comparator<>() {
+        TrieImpl < Strings > x = new TrieImpl < > ();
+        Strings one = new Strings("one", 1);
+        Strings two = new Strings("two", 2);
+        Strings three = new Strings("three", 3);
+        x.put("avi", one);
+        x.put("avit", two);
+        x.put("avitz", three);
+        Comparator < Strings > comparator = new Comparator < > () {
             @Override
             public int compare(Strings q, Strings r) {
                 return r.getint() - q.getint();
             }
         };
-        List<Strings> y = x.getAllWithPrefixSorted("",comparator);
+        List < Strings > y = x.getAllWithPrefixSorted("", comparator);
         System.out.println(y);
     }
     @Test
     void TestTriegetallstringsort() {
-        class Strings{
+        class Strings {
             private String x;
             private int z;
-            public Strings(String t, int y){
+            public Strings(String t, int y) {
                 this.x = t;
                 this.z = y;
             }
@@ -116,28 +116,28 @@ class TrieImplTest {
                 return this.x;
             }
 
-            public int getint(){
+            public int getint() {
                 return this.z;
             }
             @Override
-            public String toString(){
+            public String toString() {
                 return this.x + " " + this.z;
             }
         }
-        TrieImpl<Strings> x = new TrieImpl<>();
-        Strings one = new Strings("one",1);
-        Strings two = new Strings("two",2);
-        Strings three = new Strings("three",3);
-        x.put("avi",one);
-        x.put("avi",two);
-        x.put("avitz",three);
-        Comparator<Strings> comparator = new Comparator<>() {
+        TrieImpl < Strings > x = new TrieImpl < > ();
+        Strings one = new Strings("one", 1);
+        Strings two = new Strings("two", 2);
+        Strings three = new Strings("three", 3);
+        x.put("avi", one);
+        x.put("avi", two);
+        x.put("avitz", three);
+        Comparator < Strings > comparator = new Comparator < > () {
             @Override
             public int compare(Strings q, Strings r) {
                 return r.getint() - q.getint();
             }
         };
-        List<Strings> y = x.getAllSorted("avi",comparator);
+        List < Strings > y = x.getAllSorted("avi", comparator);
         System.out.println(y);
     }
 

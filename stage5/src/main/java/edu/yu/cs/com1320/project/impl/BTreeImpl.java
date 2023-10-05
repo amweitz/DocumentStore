@@ -8,22 +8,22 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key, Value> {
+public class BTreeImpl < Key extends Comparable < Key > , Value > implements BTree < Key, Value > {
     //max children per B-tree node = MAX-1 (must be an even number and greater than 2)
     private static final int MAX = 6;
     private Node root; //root of the B-tree
     private Node leftMostExternalNode;
     private int height; //height of the B-tree
     private int n; //number of key-value pairs in the B-tree
-    private PersistenceManager<Key,Value> pm; //manages moving between disk and heap
-    private HashSet<Key> disk = new HashSet<>();
+    private PersistenceManager < Key,
+            Value > pm; //manages moving between disk and heap
+    private HashSet < Key > disk = new HashSet < > ();
     private static class Entry {
         private Comparable key;
         private Object val;
         private Node child;
 
-        private Entry(Comparable key, Object val, Node child)
-        {
+        private Entry(Comparable key, Object val, Node child) {
             this.key = key;
             this.val = val;
             this.child = child;
@@ -36,43 +36,37 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         }
     }
 
-    private static final class Node{
+    private static final class Node {
         private int entryCount; // number of entries
         private Entry[] entries = new Entry[BTreeImpl.MAX]; // the array of children
         private Node next;
         private Node previous;
 
         // create a node with k entries
-        private Node(int k)
-        {
+        private Node(int k) {
             this.entryCount = k;
         }
 
-        private void setNext(Node next)
-        {
+        private void setNext(Node next) {
             this.next = next;
         }
-        private Node getNext()
-        {
+        private Node getNext() {
             return this.next;
         }
-        private void setPrevious(Node previous)
-        {
+        private void setPrevious(Node previous) {
             this.previous = previous;
         }
-        private Node getPrevious()
-        {
+        private Node getPrevious() {
             return this.previous;
         }
 
-        private Entry[] getEntries()
-        {
+        private Entry[] getEntries() {
             return Arrays.copyOf(this.entries, this.entryCount);
         }
 
     }
 
-    public BTreeImpl(){
+    public BTreeImpl() {
         this.root = new Node(0);
         this.leftMostExternalNode = this.root;
     }
@@ -86,13 +80,13 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
     private int height() {
         return this.height;
     }
-    public Value get(Key k){
+    public Value get(Key k) {
         if (k == null) {
             throw new IllegalArgumentException("argument to get() is null");
         }
-       Entry entry = this.get(this.root, k, this.height);
-        if(entry != null || this.disk.contains(k)){
-            if(this.disk.contains(k)){
+        Entry entry = this.get(this.root, k, this.height);
+        if (entry != null || this.disk.contains(k)) {
+            if (this.disk.contains(k)) {
                 try {
                     Value temp = this.pm.deserialize(k);
                     this.pm.delete(k);
@@ -102,9 +96,8 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
-            else{
-               return (Value) entry.val;
+            } else {
+                return (Value) entry.val;
             }
         }
         return null;
@@ -114,13 +107,12 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         //current node is external (i.e. height == 0)
         if (height == 0) {
             for (int j = 0; j < currentNode.entryCount; j++) {
-                if(isEqual(key, entries[j].key)) {
-                    return entries[j];//found desired key. Return its value
+                if (isEqual(key, entries[j].key)) {
+                    return entries[j]; //found desired key. Return its value
                 }
             }
             return null; //didn't find the key
-        }
-        else {     //current node is internal (height > 0)
+        } else { //current node is internal (height > 0)
             for (int j = 0; j < currentNode.entryCount; j++) {
                 //if (we are at the last key in this node OR the key we
                 //are looking for is less than the next key, i.e. the
@@ -135,15 +127,15 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         }
     }
 
-    public Value put(Key k, Value v){
+    public Value put(Key k, Value v) {
         if (k == null) {
             throw new IllegalArgumentException("argument key to put() is null");
         }
         //if the key already exists in the b-tree, simply replace the value
         boolean t = this.disk.contains(k);
         Entry alreadyThere = this.get(this.root, k, this.height);
-        if(alreadyThere != null || t == true) {
-            if(t == true){
+        if (alreadyThere != null || t == true) {
+            if (t == true) {
                 Object temp = alreadyThere.val;
                 alreadyThere.val = null;
                 try {
@@ -152,7 +144,7 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                put(k,v);
+                put(k, v);
                 return (Value) temp;
             }
             Object temp = alreadyThere.val;
@@ -176,11 +168,11 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         this.height++;
         return null;
     }
-    private Node put(Node currentNode, Key key, Value val, int height){
+    private Node put(Node currentNode, Key key, Value val, int height) {
         int j;
         Entry newEntry = new Entry(key, val, null);
         //external node
-        if (height == 0){
+        if (height == 0) {
             //find index in currentNode’s entry[] to insert new entry
             //we look for key < entry.key since we want to leave j
             //pointing to the slot to insert the new entry, hence we want to find
@@ -199,7 +191,7 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
                 //are looking for is less than the next key, i.e. the
                 //desired key must be added to the subtree below the current entry),
                 //then do a recursive call to put on the current entry’s child
-                if ((j + 1 == currentNode.entryCount) || less(key, currentNode.entries[j + 1].key)){
+                if ((j + 1 == currentNode.entryCount) || less(key, currentNode.entries[j + 1].key)) {
                     //increment j (j++) after the call so that a new entry created by a split
                     //will be inserted in the next slot
                     Node newNode = this.put(currentNode.entries[j++].child, key, val, height - 1);
@@ -222,12 +214,11 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         //add new entry
         currentNode.entries[j] = newEntry;
         currentNode.entryCount++;
-        if (currentNode.entryCount < BTreeImpl.MAX){
+        if (currentNode.entryCount < BTreeImpl.MAX) {
             //no structural changes needed in the tree
             //so just return null
             return null;
-        }
-        else {
+        } else {
             //will have to create new entry in the parent due
             //to the split, so return the new node, which is
             //the node for which the new entry will be created
@@ -258,17 +249,17 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
     private static boolean isEqual(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) == 0;
     }
-    public void moveToDisk(Key k) throws Exception{
-        if(this.pm == null){
+    public void moveToDisk(Key k) throws Exception {
+        if (this.pm == null) {
             throw new IllegalStateException();
         }
         Value v = get(k);
-        pm.serialize(k,v);
+        pm.serialize(k, v);
         Entry temp = this.get(this.root, k, this.height);
         temp.val = null;
         this.disk.add(k);
     }
-    public void setPersistenceManager(PersistenceManager<Key,Value> pm){
+    public void setPersistenceManager(PersistenceManager < Key, Value > pm) {
         this.pm = pm;
     }
 }

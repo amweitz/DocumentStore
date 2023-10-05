@@ -292,8 +292,8 @@ class DocumentStoreImplTest {
         URI uri = URI.create("b");
         DocumentStoreImpl doc = new DocumentStoreImpl();
         test.put(tst, uri, format);
-        List<Document> documents = test.search("Avi");
-        List<Document> docs = new ArrayList<>();
+        List < Document > documents = test.search("Avi");
+        List < Document > docs = new ArrayList < > ();
         docs.add(test.get(x));
         docs.add(test.get(uri));
         assertEquals(docs, documents);
@@ -318,8 +318,8 @@ class DocumentStoreImplTest {
         InputStream t = new ByteArrayInputStream(d.getBytes());
         URI i = URI.create("d");
         test.put(t, i, format);
-        List<Document> documents = test.searchByPrefix("A");
-        List<Document> docs = new ArrayList<>();
+        List < Document > documents = test.searchByPrefix("A");
+        List < Document > docs = new ArrayList < > ();
         docs.add(test.get(u));
         docs.add(test.get(x));
         docs.add(test.get(uri));
@@ -337,8 +337,8 @@ class DocumentStoreImplTest {
         InputStream tst = new ByteArrayInputStream(b.getBytes());
         URI uri = URI.create("b");
         test.put(tst, uri, format);
-        Set<URI> urs = test.deleteAllWithPrefix("w");
-        Set<URI> uris = new HashSet<>();
+        Set < URI > urs = test.deleteAllWithPrefix("w");
+        Set < URI > uris = new HashSet < > ();
         uris.add(uri);
         assertEquals(urs, uris);
     }
@@ -355,7 +355,7 @@ class DocumentStoreImplTest {
         URI uri = URI.create("b");
         test.put(tst, uri, format);
         test.deleteAllWithPrefix("w");
-        List<Document> urs = new ArrayList<>();
+        List < Document > urs = new ArrayList < > ();
         assertEquals(urs, test.searchByPrefix("w"));
         test.undo();
         urs.add(test.get(uri));
@@ -378,7 +378,7 @@ class DocumentStoreImplTest {
         URI u = URI.create("c");
         test.put(ts, u, format);
         test.deleteAll("Avi");
-        List<Document> urs = new ArrayList<>();
+        List < Document > urs = new ArrayList < > ();
         assertEquals(urs, test.search("Avi"));
         test.undo();
         urs.add(test.get(x));
@@ -398,7 +398,7 @@ class DocumentStoreImplTest {
         URI uri = URI.create("b");
         test.put(tst, uri, format);
         test.deleteAllWithPrefix("a");
-        List<Document> urs = new ArrayList<>();
+        List < Document > urs = new ArrayList < > ();
         assertEquals(urs, test.searchByPrefix("a"));
         test.undo(uri);
         urs.add(test.get(uri));
@@ -417,7 +417,7 @@ class DocumentStoreImplTest {
         URI uri = URI.create("b");
         test.put(tst, uri, format);
         test.deleteAllWithPrefix("w");
-        List<Document> urs = new ArrayList<>();
+        List < Document > urs = new ArrayList < > ();
         assertEquals(urs, test.searchByPrefix("w"));
         test.undo(uri);
         urs.add(test.get(uri));
@@ -436,7 +436,7 @@ class DocumentStoreImplTest {
         URI uri = URI.create("b");
         test.put(tst, uri, format);
         test.deleteAllWithPrefix("w");
-        List<Document> urs = new ArrayList<>();
+        List < Document > urs = new ArrayList < > ();
         assertEquals(urs, test.searchByPrefix("w"));
         String c = "comp sci";
         InputStream cs = new ByteArrayInputStream(c.getBytes());
@@ -464,7 +464,7 @@ class DocumentStoreImplTest {
         test.undo();
     }
     @Test
-    void testPutHeapMemoryDocAboveLimit() throws IOException {      //above doc limit
+    void testPutHeapMemoryDocAboveLimit() throws IOException { //above doc limit
         String a = "Hi my name is Avi Weitz Avi Avi";
         InputStream isTest = new ByteArrayInputStream(a.getBytes());
         DocumentStore.DocumentFormat format = DocumentStore.DocumentFormat.TXT;
@@ -492,7 +492,7 @@ class DocumentStoreImplTest {
         assertTrue(tf.exists());
     }
     @Test
-    void testPutHeapMemoryAboveByteLimit() throws IOException {      //above byte limit
+    void testPutHeapMemoryAboveByteLimit() throws IOException { //above byte limit
         String a = "Hi my name is Avi Weitz Avi Avi";
         InputStream isTest = new ByteArrayInputStream(a.getBytes());
         DocumentStore.DocumentFormat format = DocumentStore.DocumentFormat.TXT;
@@ -520,7 +520,7 @@ class DocumentStoreImplTest {
         assertTrue(tf.exists());
     }
     @Test
-    void testAddDocAboveLimit() throws IOException {      //doc we put in is above the limit
+    void testAddDocAboveLimit() throws IOException { //doc we put in is above the limit
         String a = "Hi my name is Avi Weitz Avi Avi";
         InputStream isTest = new ByteArrayInputStream(a.getBytes());
         DocumentStore.DocumentFormat format = DocumentStore.DocumentFormat.TXT;
@@ -548,7 +548,7 @@ class DocumentStoreImplTest {
         assertTrue(tf.exists());
     }
     @Test
-    void testAddDocAboveByteLimit() throws IOException {      //doc we put in is above the limit
+    void testAddDocAboveByteLimit() throws IOException { //doc we put in is above the limit
         String a = "Hi my name is Avi Weitz Avi Avi";
         InputStream isTest = new ByteArrayInputStream(a.getBytes());
         DocumentStore.DocumentFormat format = DocumentStore.DocumentFormat.TXT;
@@ -826,21 +826,20 @@ class DocumentStoreImplTest {
             x.setMaxDocumentCount(-1);
         });
     }
-    File getFile(URI uri){
+    File getFile(URI uri) {
         String domain = uri.getHost();
         String path = uri.getPath();
         String jsonFilePath;
-        if(domain == null){
-            jsonFilePath =  System.getProperty("user.dir") + File.separator + path + ".json";
-        }
-        else{
-            jsonFilePath =  System.getProperty("user.dir") + File.separator + domain + path + ".json";
+        if (domain == null) {
+            jsonFilePath = System.getProperty("user.dir") + File.separator + path + ".json";
+        } else {
+            jsonFilePath = System.getProperty("user.dir") + File.separator + domain + path + ".json";
         }
         File file = new File(jsonFilePath);
         return file;
     }
     @AfterEach
-    public void cleanUpEach(){
+    public void cleanUpEach() {
         File fileA = getFile(URI.create("a"));
         if (fileA.exists()) {
             fileA.delete();
@@ -861,6 +860,5 @@ class DocumentStoreImplTest {
             fileD.delete();
         }
     }
-
 
 }
